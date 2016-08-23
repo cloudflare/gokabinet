@@ -66,7 +66,7 @@ func BenchmarkGetLarge(b *testing.B) {
 func BenchmarkBulkBytes(b *testing.B) {
 	cmd := startServer(b)
 	defer haltServer(cmd, b)
-	db, err := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
+	db := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
 	if err != nil {
 		b.Fatal(err.Error())
 	}
