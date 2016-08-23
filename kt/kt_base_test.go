@@ -56,10 +56,7 @@ func TestCount(t *testing.T) {
 	cmd := startServer(t)
 	defer haltServer(cmd, t)
 
-	db, err := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
-	if err != nil {
-		t.Fatal(err.Error())
-	}
+	db := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
 
 	db.Set("name", []byte("Steve Vai"))
 	if n, err := db.Count(); err != nil {
@@ -74,10 +71,7 @@ func TestGetSet(t *testing.T) {
 	cmd := startServer(t)
 	defer haltServer(cmd, t)
 
-	db, err := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
-	if err != nil {
-		t.Fatal(err.Error())
-	}
+	db := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
 	keys := []string{"a", "b", "c"}
 	for _, k := range keys {
 		db.Set(k, []byte(k))
@@ -92,10 +86,7 @@ func TestMatchPrefix(t *testing.T) {
 
 	cmd := startServer(t)
 	defer haltServer(cmd, t)
-	db, err := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
-	if err != nil {
-		t.Fatal(err.Error())
-	}
+	db := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
 
 	keys := []string{
 		"cache/news/1",
@@ -157,10 +148,7 @@ func TestGetBulk(t *testing.T) {
 
 	cmd := startServer(t)
 	defer haltServer(cmd, t)
-	db, err := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
-	if err != nil {
-		t.Fatal(err.Error())
-	}
+	db := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
 
 	testKeys := map[string]string{}
 	baseKeys := map[string]string{
@@ -177,7 +165,7 @@ func TestGetBulk(t *testing.T) {
 		testKeys[k] = ""
 	}
 
-	err = db.GetBulk(testKeys)
+	err := db.GetBulk(testKeys)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -214,10 +202,7 @@ func TestSetGetRemoveBulk(t *testing.T) {
 
 	cmd := startServer(t)
 	defer haltServer(cmd, t)
-	db, err := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
-	if err != nil {
-		t.Fatal(err.Error())
-	}
+	db := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
 
 	testKeys := map[string]string{}
 	baseKeys := map[string]string{
@@ -263,10 +248,7 @@ func TestGetBulkBytes(t *testing.T) {
 
 	cmd := startServer(t)
 	defer haltServer(cmd, t)
-	db, err := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
-	if err != nil {
-		t.Fatal(err.Error())
-	}
+	db := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
 
 	testKeys := map[string][]byte{}
 	baseKeys := map[string][]byte{
@@ -283,7 +265,7 @@ func TestGetBulkBytes(t *testing.T) {
 		testKeys[k] = []byte("")
 	}
 
-	err = db.GetBulkBytes(testKeys)
+	err := db.GetBulkBytes(testKeys)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -335,10 +317,7 @@ func TestGetBulkBytesLargeValue(t *testing.T) {
 
 	cmd := startServer(t)
 	defer haltServer(cmd, t)
-	db, err := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
-	if err != nil {
-		t.Fatal(err.Error())
-	}
+	db := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
 
 	testKeys := map[string][]byte{}
 	baseKeys := map[string][]byte{
@@ -355,7 +334,7 @@ func TestGetBulkBytesLargeValue(t *testing.T) {
 		testKeys[k] = []byte("")
 	}
 
-	err = db.GetBulkBytes(testKeys)
+	err := db.GetBulkBytes(testKeys)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -387,12 +366,9 @@ func TestGetBytes(t *testing.T) {
 
 	cmd := startServer(t)
 	defer haltServer(cmd, t)
-	db, err := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
-	if err != nil {
-		t.Fatal(err.Error())
-	}
+	db := NewConn(KTHOST, KTPORT, 1, DEFAULT_TIMEOUT)
 
-	_, err = db.GetBytes("//doesntexist")
+	_, err := db.GetBytes("//doesntexist")
 	if !strings.HasSuffix(err.Error(), "logical inconsistency") {
 		t.Fatal(err)
 	}
