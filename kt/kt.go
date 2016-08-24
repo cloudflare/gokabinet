@@ -39,7 +39,7 @@ type Conn struct {
 // REST format is just the body of the HTTP request being the value.
 
 // NewConn creates a connection to an Kyoto Tycoon endpoint.
-func NewConn(host string, port int, poolsize int, timeout time.Duration) (*Conn, error) {
+func NewConn(host string, port int, poolsize int, timeout time.Duration) *Conn {
 	portstr := strconv.Itoa(port)
 	c := &Conn{
 		timeout: timeout,
@@ -50,13 +50,7 @@ func NewConn(host string, port int, poolsize int, timeout time.Duration) (*Conn,
 		},
 	}
 
-	// connectivity check so that we can bail out
-	// early instead of when we do the first operation.
-	_, _, err := c.doRPC("/rpc/void", nil)
-	if err != nil {
-		return nil, err
-	}
-	return c, nil
+	return c
 }
 
 var (
